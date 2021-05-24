@@ -1,26 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
+import styeld from "styled-components";
+
+import ThemeContext from "../ui/Theme";
 
 const CharachterItem = ({ item }) => {
+  const { t, i18n } = useTranslation();
+  const themes = useContext(ThemeContext);
+
   return (
     <div className="card">
       <div className="card-inner">
         <div className="card-front">
           <img src={item.img} alt="" />
         </div>
-        <div className="card-back">
+        <div className="card-back" style={themes}>
           <h1>{item.name}</h1>
           <ul>
-            <li>
-              <strong>Actor Name:</strong> {item.portrayed}
+            <li style={themes}>
+              <strong>{t("langugeSet.1")}</strong> {item.portrayed}
             </li>
             <li>
-              <strong>Nickname:</strong> {item.nickname}
+              <strong>{t("langugeSet.2")}:</strong> {item.nickname}
             </li>
             <li>
-              <strong>Birthday:</strong> {item.birthday}
+              <strong>{t("langugeSet.3")}:</strong> {item.birthday}
             </li>
             <li>
-              <strong>Status:</strong> {item.status}
+              <strong>{t("langugeSet.4")}:</strong> {item.status}
             </li>
           </ul>
         </div>

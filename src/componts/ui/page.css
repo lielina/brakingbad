@@ -1,0 +1,20 @@
+.pageContainer {
+  display: flex;
+  flex-direction: row;
+  color: white;
+
+  justify-content: center;
+}
+.page {
+  border: 1px green solid;
+  width: 30px;
+  height: 30px;
+  color: white;
+  display: flex;
+  border-radius: 5px;
+}
+.page a {
+  color: white;
+  align-self: center;
+  margin: 10px;
+}

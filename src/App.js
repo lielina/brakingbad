@@ -1,15 +1,42 @@
 import "./App.css";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Header from "./componts/ui/header";
 import Search from "./componts/ui/search";
+import Pegnation from "./componts/ui/Pegnation";
+import Languge from "./componts/ui/Language";
 import Charachtergrid from "./componts/charachters/charachtergrid";
+import Language from "./componts/ui/Language";
+import Styeld from "styled-components";
+import Toggle from "./componts/ui/Toggle";
+import { ThemeContext, themes } from "./componts/ui/Theme";
+
+import { ThemeProvider } from "styled-components";
+
+import { useTranslation } from "react-i18next";
 
 const App = () => {
+  const container = Styeld.div`
+ max-width 50px
+  `;
+
   const [items, setItems] = useState([]);
+  const { t, i18n } = useTranslation();
   const [isloading, setIsloading] = useState(true);
   const [query, setquery] = useState("");
+  const [currentPage, setcurrentpage] = useState(1);
+  const [postPerPage, setPostPerPage] = useState(8);
+  const [theme, setTheme] = useState(themes.darkTheme);
+  const [themee, setThemee] = useState("darkTheme");
 
+  const indexOfLastPost = currentPage * postPerPage;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+
+  const currentItems = items.slice(indexOfFirstPost, indexOfLastPost);
+
+  const LanguageChooser = lang => {
+    i18n.changeLanguage(lang);
+  };
   useEffect(() => {
     const fetchItems = async () => {
       const result = await axios(
@@ -21,16 +48,59 @@ const App = () => {
     fetchItems();
   }, [query]);
 
+  const pagnate = pageNumber => {
+    setcurrentpage(pageNumber);
+  };
+  const toggleTheme = () =>
+    theme === themes.darkTheme
+      ? (setTheme(themes.lightTheme), setThemee("lightTheme"))
+      : (setTheme(themes.darkTheme), setThemee("darkTheme"));
+
   return (
-    <div className="container">
-      <Header />
-      <Search
-        getQuery={q => {
-          setquery(q);
-        }}
-      />
-      <Charachtergrid items={items} isloading={isloading} />
-    </div>
+    <ThemeContext.Provider value={theme}>
+      <body style={theme}>
+        <button
+          onClick={() => {
+            LanguageChooser("en");
+          }}
+        >
+          English
+        </button>
+
+        <button
+          onClick={() => {
+            LanguageChooser("fr");
+          }}
+        >
+          Amharic
+        </button>
+        <Toggle theme={themee} toggleTheme={toggleTheme}></Toggle>
+        <div className="container" style={theme}>
+          <Header />
+
+          <Search
+            getQuery={q => {
+              setquery(q);
+            }}
+          />
+          <Pegnation
+            itemsPerPage={postPerPage}
+            totalItems={items.length}
+            pagnate={pagnate}
+          />
+          <h1
+            style={{
+              textAlign: "center",
+              color: "green",
+              marginBottom: "10%"
+            }}
+          >
+            {t("langugeSet.0")}
+          </h1>
+          <Charachtergrid items={currentItems} isloading={isloading} />
+        </div>
+      </body>
+    </ThemeContext.Provider>
   );
 };
 

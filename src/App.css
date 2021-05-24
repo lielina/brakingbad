@@ -6,7 +6,6 @@
 
 html,
 body {
-  background: #000 url("img/bg.jpg") no-repeat center center/cover;
   height: 100vh;
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
@@ -73,6 +72,8 @@ input[type="text"] {
   background-color: transparent;
   height: 300px;
   perspective: 1000px;
+  border-radius: 12px;
+  border: #1f5537 1px solid;
 }
 
 .card h1 {
