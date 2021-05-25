@@ -17,7 +17,7 @@ const CharachterItem = ({ item }) => {
         <div className="card-back" style={themes}>
           <h1>{item.name}</h1>
           <ul>
-            <li style={themes}>
+            <li>
               <strong>{t("langugeSet.1")}</strong> {item.portrayed}
             </li>
             <li>

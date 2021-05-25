@@ -4,22 +4,12 @@ import React, { useState, useEffect, useContext } from "react";
 import Header from "./componts/ui/header";
 import Search from "./componts/ui/search";
 import Pegnation from "./componts/ui/Pegnation";
-import Languge from "./componts/ui/Language";
 import Charachtergrid from "./componts/charachters/charachtergrid";
-import Language from "./componts/ui/Language";
-import Styeld from "styled-components";
 import Toggle from "./componts/ui/Toggle";
 import { ThemeContext, themes } from "./componts/ui/Theme";
-
-import { ThemeProvider } from "styled-components";
-
 import { useTranslation } from "react-i18next";
 
 const App = () => {
-  const container = Styeld.div`
- max-width 50px
-  `;
-
   const [items, setItems] = useState([]);
   const { t, i18n } = useTranslation();
   const [isloading, setIsloading] = useState(true);
@@ -66,7 +56,6 @@ const App = () => {
         >
           English
         </button>
-
         <button
           onClick={() => {
             LanguageChooser("fr");
@@ -77,7 +66,6 @@ const App = () => {
         <Toggle theme={themee} toggleTheme={toggleTheme}></Toggle>
         <div className="container" style={theme}>
           <Header />
-
           <Search
             getQuery={q => {
               setquery(q);
